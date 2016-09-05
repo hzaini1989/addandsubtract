@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1">
+    <title>加减运算，相互制约</title>
+    <style> 
+        *{margin:0;padding:0;}
+        .llh-item-box-body{width:300px;margin:100px auto 0;}
+        ul li{float:left;list-style:none;}
+        .clear{clear:both;width:100px;}
+        .input-group-control{width:20px;height:20px;}
+        .input-group div,.input-group input{float:left;width:20px;height:20px;line-height:20px;text-align:center;border:1px solid #ddd;}
+        .bg{background:red;}
+        .input-group div.br{border:1px solid red;}
+    </style>
+</head>
+
+<body>
+<div class="llh-item-box-body">
+    <ul class="ui-row">
+        <li class="clear">成人</li>
+        <li class="">
+            <div class="input-group" id="adult">
+                <div class="input-group-addon">-</div>
+                <input type="text" class="input-group-control" id="adultNum" value="2" readonly="">
+
+                <div class="input-group-addon">+</div>
+            </div>
+        </li>
+        <li class="clear">儿童<span class=""></span></li>
+        <li class="">
+            <div class="input-group" id="child">
+                <div class="input-group-addon">-</div>
+                <input type="text" class="input-group-control" id="childNum" value="0" readonly="">
+
+                <div class="input-group-addon">+</div>
+            </div>
+        </li>
+        <li class="clear">儿童<span class=""></span></li>
+        <li class="">
+            <div class="input-group" id="baby">
+                <div class="input-group-addon">-</div>
+                <input type="text" class="input-group-control" id="childNum" value="0" readonly="">
+
+                <div class="input-group-addon">+</div>
+            </div>
+        </li>
+    </ul>
+
+</div>
+    <script src="jquery-1.9.1.min.js"></script>
+    <script src="input.js"></script>
+    <script>
+        var adultVal = 2,childVal =0;
+        $('#adult').input({
+            max: 9,
+            value: adultVal,
+            min: 1,
+            fnChange: function (type, val) {
+                var $child = $('#child');
+                $child.input({
+                    max: Math.min(9 - val, val * 2)
+                });
+            }
+        });
+        $('#child').input({
+            max: Math.min(9 - adultVal, adultVal * 2),
+            min: 0,
+            value: childVal
+        });
+        $('#baby').input({
+            max: 100,
+            min: 0,
+            value: childVal
+        });
+    </script>
+</body>
+
+</html>
